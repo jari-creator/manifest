@@ -20,6 +20,10 @@ jobs:
           chmod a+x ~/bin/repo
           echo "$HOME/bin" >> $GITHUB_PATH
 
+      - name: Set up Repo URL to use HTTPS
+        run: |
+          git config --global url."https://github.com/".insteadOf "git@github.com:"
+        
       - name: Repo Init and Sync
         run: |
           mkdir -p workspace
