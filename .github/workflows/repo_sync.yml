@@ -1,0 +1,41 @@
+name: Repo Sync
+
+on:
+  workflow_dispatch:  # Trigger manually
+  push:               # Or trigger on push to a branch
+    branches:
+      - main
+
+jobs:
+  sync-repositories:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the manifest repository
+      - name: Checkout Manifest Repository
+        uses: actions/checkout@v4
+        with:
+          repository: 'jari-creator/manifest'
+          ref: 'main'  # Branch where default.xml is located
+          path: 'manifest'  # Checkout into "manifest" directory
+
+      # Step 2: Install repo tool
+      - name: Install Repo Tool
+        run: |
+          mkdir -p ~/bin
+          curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+          chmod a+x ~/bin/repo
+          echo "$HOME/bin" >> $GITHUB_PATH
+
+      # Step 3: Initialize Repo
+      - name: Repo Init
+        run: |
+          mkdir -p workspace
+          cd workspace
+          repo init -u ../manifest -b main -m default.xml
+
+      # Step 4: Repo Sync
+      - name: Repo Sync
+        run: |
+          cd workspace
+          repo sync -j4
