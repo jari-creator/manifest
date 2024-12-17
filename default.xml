@@ -8,8 +8,8 @@
     <remote name="github" fetch="https://github.com/jari-creator" />
 
     <!-- Define the repositories you want to sync -->
-    <project name="repo-1" path="repo-1" />
-    <project name="repo-2" path="repo-2" />
-    <project name="repo-3" path="repo-3" />
+    <project name="repo-1" path="repo-1" revision="main"/>
+    <project name="repo-2" path="repo-2" revision="main"/>
+    <project name="repo-3" path="repo-3" revision="main"/>
 
 </manifest>
