@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest xmlns="http://www.w3.org/2001/XMLSchema-instance" version="1.0">
+
+    <!-- Default branch to sync -->
+    <default revision="main" remote="github" />
+
+    <!-- Define the GitHub remote -->
+    <remote name="github" fetch="https://github.com/jari-creator" />
+
+    <!-- Define the repositories you want to sync -->
+    <project name="repo-1" path="repo-1" />
+    <project name="repo-2" path="repo-2" />
+    <project name="repo-3" path="repo-3" />
+
+</manifest>
