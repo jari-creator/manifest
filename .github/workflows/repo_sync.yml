@@ -48,10 +48,10 @@ jobs:
       - name: Identify Triggering Repository
         run: |
           if [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
-            echo "This build was triggered by a push to $GITHUB_REPOSITORY"
+            echo "This build was triggered by a push to manifest repo"
           elif [[ "$GITHUB_EVENT_NAME" == "repository_dispatch" ]]; then
             TRIGGER_REPO=$(jq -r '.client_payload.repository' < $GITHUB_EVENT_PATH)
-            echo "This build was triggered by a repository dispatch from $TRIGGER_REPO"
+            echo "This build was triggered by a repository dispatch from Android repo"
           else
             echo "Unknown trigger event: $GITHUB_EVENT_NAME"
           fi
