@@ -5,8 +5,7 @@ on:
     branches:
       - main
   repository_dispatch:
-    types:
-      - repo-updated
+    types: [repo-updated]  # Custom event type you will send
 
 jobs:
   sync:
