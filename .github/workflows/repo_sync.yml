@@ -19,7 +19,7 @@ jobs:
           curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
           chmod a+x ~/bin/repo
           echo "$HOME/bin" >> $GITHUB_PATH
-
+          
       - name: Set up Repo URL to use HTTPS
         run: |
           git config --global url."https://github.com/".insteadOf "git@github.com:"
@@ -32,3 +32,8 @@ jobs:
           repo init -u https://github.com/jari-creator/manifest.git -b main -m default.xml
           echo "Syncing repos"
           repo sync
+
+      - name: Verify Repo Sync
+        run: |
+          echo "Listing folders after sync:"
+          ls -l workspace
