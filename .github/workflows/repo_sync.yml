@@ -43,3 +43,15 @@ jobs:
       - name: Build Android
         run: |
           echo "Build successful"
+
+      # Identify which repo triggered the workflow
+      - name: Identify Triggering Repository
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
+            echo "This build was triggered by a push to $GITHUB_REPOSITORY"
+          elif [[ "$GITHUB_EVENT_NAME" == "repository_dispatch" ]]; then
+            TRIGGER_REPO=$(jq -r '.repository.name' < $GITHUB_EVENT_PATH)
+            echo "This build was triggered by a repository dispatch from $TRIGGER_REPO"
+          else
+            echo "Unknown trigger event: $GITHUB_EVENT_NAME"
+          fi
