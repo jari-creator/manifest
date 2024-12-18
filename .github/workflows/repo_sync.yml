@@ -8,7 +8,7 @@ on:
     types: [repo-updated]  # Custom event type you will send
 
 jobs:
-  sync:
+  On-review-build:
     runs-on: ubuntu-latest
 
     steps:
@@ -39,3 +39,7 @@ jobs:
         run: |
           cd workspace
           ls -l
+
+      - name: Build Android
+        run: |
+          echo "Build successful"
