@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  repository_dispatch:
+    types:
+      - repo-updated
 
 jobs:
   sync:
@@ -19,11 +22,11 @@ jobs:
           curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
           chmod a+x ~/bin/repo
           echo "$HOME/bin" >> $GITHUB_PATH
-          
+
       - name: Set up Repo URL to use HTTPS
         run: |
           git config --global url."https://github.com/".insteadOf "git@github.com:"
-        
+
       - name: Repo Init and Sync
         run: |
           mkdir -p workspace
@@ -33,7 +36,7 @@ jobs:
           echo "Syncing repos"
           repo sync
 
-      - name: Verify Repo Sync
+      - name: List Synced Folders
         run: |
-          echo "Listing folders after sync:"
-          ls -l workspace
+          cd workspace
+          ls -l
