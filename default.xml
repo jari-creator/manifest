@@ -5,7 +5,7 @@
     <default revision="main" remote="github" />
 
     <!-- Define the GitHub remote -->
-    <remote name="github" fetch="git@github.com:jari-creator" />
+    <remote name="github" fetch="https://github.com/jari-creator" />
 
     <!-- Define the repositories you want to sync -->
     <project name="repo-1" path="repo-1" revision="main"/>
