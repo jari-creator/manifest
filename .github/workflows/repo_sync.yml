@@ -1,9 +1,6 @@
 name: On-review build
 
 on:
-  push:
-    branches:
-      - main
   repository_dispatch:
     types: [repo-updated]  # Custom event type you will send
 
@@ -14,6 +11,10 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.client_payload.repository }}
+          ref: ${{ github.event.client_payload.branch }}
+          path: changes
 
       - name: Install repo tool
         run: |
@@ -35,23 +36,7 @@ jobs:
           echo "Syncing repos"
           repo sync
 
-      - name: List Synced Folders
+      - name: Verify Changes Location
         run: |
-          cd workspace
-          ls -l
-
-      - name: Build Android
-        run: |
-          echo "Build successful"
-
-      # Identify Triggering Repository
-      - name: Identify Triggering Repository
-        run: |
-          if [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
-            echo "This build was triggered by a push to manifest repo"
-          elif [[ "$GITHUB_EVENT_NAME" == "repository_dispatch" ]]; then
-            TRIGGER_REPO=$(jq -r '.client_payload.repository' < $GITHUB_EVENT_PATH)
-            echo "This build was triggered by a repository dispatch from Android repo"
-          else
-            echo "Unknown trigger event: $GITHUB_EVENT_NAME"
-          fi
+          echo "Repository changes placed in the 'changes' folder:"
+          ls -al changes
