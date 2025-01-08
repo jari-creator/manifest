@@ -36,7 +36,21 @@ jobs:
           echo "Syncing repos"
           repo sync
 
-      - name: Verify Changes Location
+      - name: Copy Changes to Correct Repository
         run: |
-          echo "Repository changes placed in the 'changes' folder:"
-          ls -al changes
+          repo_name=$(basename "${{ github.event.client_payload.repository }}" .git)
+          target_dir="workspace/$repo_name"
+          echo "Copying changes to $target_dir"
+
+          if [ -d "$target_dir" ]; then
+            cp -r changes/* "$target_dir/"
+            echo "Changes copied successfully to $target_dir"
+          else
+            echo "Error: Target repository directory $target_dir does not exist."
+            exit 1
+          fi
+
+      - name: Verify Changes in Workspace
+        run: |
+          echo "Contents of the target directory:"
+          ls -al "workspace/$(basename "${{ github.event.client_payload.repository }}" .git)"
