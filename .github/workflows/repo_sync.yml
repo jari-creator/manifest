@@ -35,6 +35,7 @@ jobs:
           repo init -u https://github.com/jari-creator/manifest.git -b main -m default.xml
           echo "Syncing repos"
           repo sync
+          repo forall -c 'ls -la'
 
       - name: Copy Changes to Correct Repository
         run: |
