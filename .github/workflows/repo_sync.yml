@@ -54,3 +54,8 @@ jobs:
         run: |
           echo "Contents of the target directory:"
           ls -al "workspace/$(basename "${{ github.event.client_payload.repository }}" .git)"
+          repo_name=$(basename "${{ github.event.client_payload.repository }}" .git)
+          target_dir="workspace/$repo_name"
+          cd $target_dir
+          cat init.txt
+          
